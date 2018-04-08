@@ -1,0 +1,64 @@
+<!--
+Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot
+
+This file is part of P&P Deep-Vis.
+
+P&P Deep-Vis is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+P&P Deep-Vis is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+details.
+
+# You should have received a copy of the GNU Lesser General Public License along
+# with P&P Deep-Vis; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{url_for('static',filename='src/css/about.css')}}"/>
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  <!-- Page -->
+  <div class="container w3-animate-opacity" style="margin-top: 80px;">
+    <div class="well text-center text-primary">
+      <h1 style="font-family: 'Special Elite', cursive; color: black;">About Deep-Vis</h1>
+    </div>
+    <div id="licence" class="well" style="font-style: italic;">
+      This application is based on the paper <a class="link" href="https://vadl2017.github.io/paper/vadl_0100-paper.pdf">"Plug-and-Play Interactive Deep Network Visualization"</a> of G. Strezoski & al.<br><br>
+      It uses <a class="link" href="https://keras.io/">Keras</a>, a high-level neural networks API written in Python and running on top of <a class="link" href="https://www.tensorflow.org/">Tensorflow</a>,
+      and <a class="link" href="https://raghakot.github.io/keras-vis/">Keras-Vis</a>, a neural network visualisation toolkit for keras, in order to process the visualizations.
+    </div>
+    <div id="licence" class="well" style="font-style: italic;">
+      Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot <br><br>
+
+      GNU LESSER GENERAL PUBLIC LICENSE<br><br>
+
+      This program is free software: you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the Free
+      Software Foundation, either version 3 of the License, or (at your option)
+      any later version. <br><br>
+
+      This program is distributed in the hope that it will be useful but WITHOUT
+      ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+      FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+      more details. <br><br>
+
+      See more on <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>
+     </div>
+  </div>
+
+  <!-- JavaScript -->
+   <script>
+   $(document).ready(function() {
+     $("#menu-about").addClass('active');
+   });
+   </script>
+{% endblock %}

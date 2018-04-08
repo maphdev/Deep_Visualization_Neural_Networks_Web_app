@@ -1,0 +1,197 @@
+<!--
+Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot
+
+This file is part of P&P Deep-Vis.
+
+P&P Deep-Vis is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+P&P Deep-Vis is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+details.
+
+# You should have received a copy of the GNU Lesser General Public License along
+# with P&P Deep-Vis; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{url_for('static',filename='src/css/index.css')}}"/>
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  <!-- Big title -->
+   <div class="container w3-animate-opacity" style="margin-top: 80px;">
+     <div class="jumbotron text-center text-primary">
+       <h1 style="font-family: 'Special Elite', cursive;">Deep Neural network Visualisation</h1>
+     </div>
+   </div>
+   <!-- Informations -->
+   <div class="container w3-animate-opacity">
+     <div class="well">
+       <h2>What is Deep-Vis ?</h2>
+       <p>This tool aims at helping to visualize neural networks in order to
+         better understand their internal functioning.<br>Two visualizations are
+         available: Reason and Maxout.</p>
+    </div>
+     <div class="well">
+       <h2>Reason</h2>
+       <p> This visualization uses the Grad-CAM technique to display which parts of the
+         source image are most responsible for the classification decision.
+         You can choose the layer and unit to visualize, or let the model predict
+         it for you. Areas of interest in the image are highlighted by warm colors
+         (ranging from red to yellow) and areas with less interest for
+         classification are represented by cool colors
+         (ranging from green to blue).<br><br>
+
+         Below are some Reason's results on VGG16 model, a model trained on ImageNet.<br>
+         The selected layer was the prediction layer, and the unit selected was the class present mostly on the image (predicted class).
+       </p>
+     </div>
+     <div class="row images">
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-Reason-22-01-goldfish.jpg') }}" class="img-thumbnail" alt="goldfish">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-Reason-22-20-ouzel1.jpg') }}" class="img-thumbnail" alt="ouzel1">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-Reason-22-20-ouzel2.jpg') }}" class="img-thumbnail" alt="ouzel2">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-Reason-22-207-goldenretriever.jpg') }}" class="img-thumbnail" alt="golden retriever">
+       </div>
+     </div>
+     <div class="well">
+       <h2>MaxOut</h2>
+       <p>This visualization displays the maximum activation input for a
+         specific target in any layer of a given model. The unit of a layer can
+         be chosen in order to know what this unit mainly looks for in an image.
+         This visualization asks how many iterations you want to perform, and
+         the larger the number of iterations is, the more the image will be
+         representative  of the unit. The image thus produced should make the
+         selected unit react as much as possible.<br><br>
+
+         Below are some MaxOut's results on VGG16 model, a model trained on ImageNet.<br>
+         The first image corresponds to MaxOut with 200 iterations for a unit of the 3rd layer,
+         the second image for a unit of the 7th layer, the third and fourth
+         image for a unit of the 22nd layer, in other words the prediction layer.
+       </p>
+     </div>
+     <div class="row images">
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-MaxOut-3-18.png') }}" class="img-thumbnail" alt="MaxOut">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-MaxOut-7-15.png') }}" class="img-thumbnail" alt="MaxOut">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-MaxOut-22-20-ouzel.jpg') }}" class="img-thumbnail" alt="MaxOut">
+       </div>
+       <div class="col-xs-3">
+         <img src="{{ url_for('static', filename='src/img/VGG16-MaxOut-22-953-pineapple.jpg') }}" class="img-thumbnail" alt="MaxOut">
+       </div>
+     </div>
+     <div class="well">
+       <h2>How to use Deep-Vis ?</h2>
+       <p>A visualization starts on the <a class="link" href="{{url_for('models')}}">"Models"
+         page</a>. You can either upload a new model onto the server in order to
+         start a visualization on it, or directly start a visualization with an
+         already loaded model. To upload a model to the server, click on
+         the "Upload a model" button and select a pre-trained model in .h5 format.
+         To start the visualization process, click on the name of the model
+         that you are interested in and it will lead you to the "Visualisation
+         parameters" page.<br><br>
+
+         The "Visualization Parameters" page allows to select visualization
+         parameters for the model that was just selected. On the right, select the form
+         of visualization you want to process and complete it. You can help
+         yourself to choose layer's parameter with the graph on the left by just
+         clicking on the layer you are interested in. To start the visualization,
+         click on "Start Visualization".<br><br>
+
+         After performing the calculations, the result of the visualisation will
+         be displayed on a new page, on which you can save the result or make a
+         new visualisation.<br><br>
+
+         Models can be deleted from the server by clicking the "Delete" button on the "Models" page.
+       </p>
+     </div>
+  <div class="well">
+    <h2>Examples</h2>
+    These examples are made with the VGG16 model, trained on ImageNet.<br><br>
+    <h4 class="text-center">First example : Reason with predict</h4>
+    <div class="row">
+      <div class="col-xs-4">
+        Input image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/ouzel1.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Parameters<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/form-reason-1.png') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Result image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/VGG16-Reason-22-20-ouzel1.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+    </div>
+    <div class="text-center">The model predicted that class 20 representing an ouzel was present in the image.</div><br>
+    <h4 class="text-center">Second example : Reason without predict</h4>
+    <div class="row">
+      <div class="col-xs-4">
+        Input image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/ouzel1.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Parameters<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/form-reason-2.png') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Result image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/VGG16-Reason-22-20-ouzel1.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+    </div>
+    <div class="text-center">We want to visualize Reason for the class 20 corresponding to "ouzel".</div><br>
+    <h4 class="text-center">Third example : Reason without predict</h4>
+    <div class="row">
+      <div class="col-xs-4">
+        Input image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/goldenretriever.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Parameters<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/form-reason-3.png') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Result image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/VGG16-Reason-22-207-goldenretriever.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+    </div>
+    <div class="text-center">We want to visualize Reason for the class 207 corresponding to "golden retriever".</div><br>
+    <h4 class="text-center">Fourth example : MaxOut</h4>
+    <div class="row">
+      <div class="col-xs-4">
+        Parameters<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/form-reason-4.png') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+      <div class="col-xs-4">
+        Result image<br>
+        <img class="img-result" src="{{ url_for('static', filename='src/img/VGG16-MaxOut-22-953-pineapple.jpg') }}" class="img-thumbnail" alt="image"><br><br>
+      </div>
+    </div>
+    <div class="text-center">We want to visualize MaxOut for the class 953 corresponding to "pineapple".</div><br>
+</div>
+
+   <!-- JavaScript -->
+   <script>
+   $(document).ready(function() {
+     $("#menu-index").addClass('active');
+   });
+   </script>
+{% endblock %}

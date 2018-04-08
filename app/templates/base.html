@@ -1,0 +1,59 @@
+<!--
+Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot
+
+This file is part of P&P Deep-Vis.
+
+P&P Deep-Vis is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+P&P Deep-Vis is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+details.
+
+# You should have received a copy of the GNU Lesser General Public License along
+# with P&P Deep-Vis; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<!DOCTYPE html>
+<html>
+  <head lang="en-US">
+    <title>Deep-Vis</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap-3.3.7-dist/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='src/css/menu.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='lib/W3.CSS/w3.css')}}">
+    <script src="{{ url_for('static', filename='lib/JQuery/jquery-3.3.1.min.js') }}"></script>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Menu -->
+    <div class="container" style="margin-bottom: 80px;">
+      <nav class="navbar navbar-fixed-top primary-black">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{url_for('index')}}">Deep-Vis</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+              <li><a id="menu-index" class="menu-item" href="{{url_for('index')}}">Home</a></li>
+              <li><a id="menu-models" class="menu-item" href="{{url_for('models')}}">Models</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a id="menu-about" class="menu-item" href="{{url_for('about')}}">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    {% block body %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!--
+Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot
+
+This file is part of P&P Deep-Vis.
+
+P&P Deep-Vis is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+P&P Deep-Vis is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+details.
+
+# You should have received a copy of the GNU Lesser General Public License along
+# with P&P Deep-Vis; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{url_for('static',filename='src/css/visualisations.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static',filename='src/css/loading_icon.css')}}"/>
+{% endblock %}
+
+{% block body %}
+  <!-- Main Grid -->
+  <div class="container w3-animate-opacity" style="margin-top: 80px;">
+    <div class="well text-center text-muted lead">
+      <strong>{{filename}}</strong>
+    </div>
+  </div>
+  <div class="container w3-animate-opacity" style="margin-top: 20px;">
+    <div class="row">
+      <!-- left side -->
+      <div class="col-md-3 column"></div>
+      <div class="col-md-1 column">
+        <div class="dataContainer"></div>
+      </div>
+      <div class="col-md-3 column"></div>
+      <!-- Right side -->
+      <div class="col-md-5">
+        <div class="w3-container">
+          <div class="w3-bar primary-black">
+            <button class="w3-bar-item w3-button tablink active" onclick="changeVisuForm(event,'Reason')">Reason</button>
+            <button class="w3-bar-item w3-button tablink" onclick="changeVisuForm(event,'MaxOut')">MaxOut</button>
+          </div>
+          <!-- Reason Form -->
+          <div id="Reason" class="w3-container w3-border visu">
+            <form method="POST" action="{{url_for('result_reason')}}" enctype="multipart/form-data">
+              <br>
+              <label class="btn btn-default">Upload an image<input type="file" name="image" accept=".jpg, .png" required></label> <br><br>
+              <div class="form-group">
+                <label style="margin-right: 20px;">Predict for me ?</label>
+                <input id="reason-checkbox" type="checkbox" name="predict" value="predict" checked>
+              </div>
+              <div class="form-group">
+                <label>Layer</label>
+                <input id="reason-layer" class="form-control layer" type="number" name="layer" value="0" min="0" required disabled>
+              </div>
+              <div class="form-group">
+                <label>Unit</label>
+                <input id="reason-unit" class="form-control filter" type="number" name="unit" value="0" min="0" required disabled>
+              </div>
+              <div class="form-group">
+                <label style="margin-right: 20px;">From cache ?</label>
+                <input id="reason-cache" type="checkbox" name="cache" value="cache" checked>
+              </div>
+              <div class="text-center">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <br><div style="color:#FF0000;">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </div>
+              <br>
+              <input class="btn btn-block btn-primary" type="submit" value="Start Visualisation" onclick="showLoading()">
+              <br>
+            </form>
+          </div>
+          <!-- MaxOut Form -->
+          <div id="MaxOut" class="w3-container w3-border visu" style="display:none">
+            <form method="POST" action="{{url_for('result_maxout')}}" enctype="multipart/form-data">
+              <br>
+              <div class="form-group">
+                <label>Layer</label>
+                <input class="form-control layer" type="number" name="layer" value="0" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Unit</label>
+                <input class="form-control filter" type="number" name="unit" value="0" min="0" required>
+              </div>
+              <div class="form-group">
+                <label>Number of iterations</label>
+                <input class="form-control" type="number" name="iterations" value="0" min="0" required>
+              </div>
+              <div class="text-center">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <br><div style="color:#FF0000;">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </div>
+              <br>
+              <input class="btn btn-block btn-primary" type="submit" value="Start Visualisation" onclick="showLoading()">
+              <br>
+            </form>
+          </div>
+        </div>
+      </div> <!--col -->
+    </div>
+  </div>
+  <div class="container text-center">
+    <div id="loading" class="loader" style="visibility:hidden"></div>
+  </div>
+
+  <!-- JavaScript -->
+  <script type="text/javascript" src="{{ url_for('static', filename='src/js/loading.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='src/js/visualisations.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='src/js/importD3Model.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/D3.JS/d3.min.js') }}"></script>
+  <script>
+  $(document).ready(function() {
+    importData({{json_name|tojson}});
+  });
+  </script>
+
+{% endblock %}

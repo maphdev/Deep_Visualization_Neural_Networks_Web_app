@@ -1,0 +1,82 @@
+<!--
+Copyright 2018 (C) A. Brabant A. Delasalle L. Leduc M. Philippot
+
+This file is part of P&P Deep-Vis.
+
+P&P Deep-Vis is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+P&P Deep-Vis is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+details.
+
+# You should have received a copy of the GNU Lesser General Public License along
+# with P&P Deep-Vis; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{url_for('static', filename='src/css/models.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='src/css/loading_icon.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='lib/fontawesome-free-5.0.9/web-fonts-with-css/css/fontawesome-all.min.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  <!-- Page -->
+  <div class="container w3-animate-opacity" style="margin-top: 80px;">
+    <div class="well text-center text-primary">
+      <h1 style="font-family: 'Special Elite', cursive; color: black;">Model management</h1>
+    </div>
+  </div>
+  <div class="w3-animate-opacity">
+    <!-- Upload button -->
+    <div class="container text-center">
+      <form method="POST" action="{{url_for('upload_model')}}" enctype="multipart/form-data">
+        <label class="btn btn-primary">Upload a model<input id="upload" type="file" name="model" accept=".h5" onchange="this.form.submit();" style="display: none !important;"></label>
+      </form>
+    </div>
+    <div class="text-center">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <br><div style="color:#FF0000;">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+    <!-- List of model files -->
+    <div id="models" class="container">
+      {% for filename in files %}
+      <div id="row" class="row> ">
+        <div id="line" class="col-xs-10">
+          <form method="POST" action="{{url_for('visualisations')}}" enctype="multipart/form-data">
+            <Button onclick="showLoading()" class="btn btn-block btn-default" name="filename" value={{filename}}>{{ filename }}</button>
+          </form>
+        </div>
+        <div id="line" class="col-xs-2">
+          <form method="POST" action="{{url_for('delete_model')}}" enctype="multipart/form-data">
+            <Button class="btn btn-block btn-danger" name="filename" value={{filename}}>Delete <i class="fa fa-trash"></i></button><br>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="container text-center">
+    <div id="loading" class="loader" style="visibility:hidden"></div> <!-- style="display:none -->
+  </div>
+
+  <!-- JavaScript -->
+  <script type="text/javascript" src="{{ url_for('static', filename='src/js/loading.js') }}"></script>
+   <script>
+   $(document).ready(function() {
+     $("#menu-models").addClass('active');
+   });
+   </script>
+{% endblock %}
