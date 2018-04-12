@@ -1,6 +1,6 @@
 # Deep Visualization Neural Networks
 
-Programmation project carried out as part of the Master's degree in Computer Science at the University of Bordeaux.
+Programmaing project carried out as part of the Master's degree in Computer Science at the University of Bordeaux.
 
 The main purpose is to offer an easy way to visualize convolutional neural networks, through two visualizations types described in the [paper](https://vadl2017.github.io/paper/vadl_0100-paper.pdf) of G. Strezoski et al. : Reason and MaxOut.
 
