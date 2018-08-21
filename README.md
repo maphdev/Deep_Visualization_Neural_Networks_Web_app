@@ -2,9 +2,25 @@
 
 Programming project carried out as part of the Master's degree in Computer Science at the University of Bordeaux.
 
-The main purpose is to offer an easy way to visualize convolutional neural networks, through two visualizations types described in the [paper](https://vadl2017.github.io/paper/vadl_0100-paper.pdf) of G. Strezoski et al. : Reason and MaxOut.
+The main purpose is to offer an easy way to visualize convolutional neural networks, through two visualizations types described in the [paper](https://vadl2017.github.io/paper/vadl_0100-paper.pdf) of G. Strezoski et al. :
+
+- __Reason__ uses the Grad-CAM technique to display which parts of the source image are most responsible for the classification decision. 
+![reason](https://github.com/maphdev/Deep_Visualization_Neural_Networks_Web_app/blob/master/readme/ex-reason.png)
+
+- __MaxOut__ displays the maximum activation input for a specific target in any layer of a given model.
+![maxout](https://github.com/maphdev/Deep_Visualization_Neural_Networks_Web_app/blob/master/readme/ex-maxout.png)
 
 Visualizations are implemented with Keras, a high-level neural networks API written in Python and capable of running on top of Tensorflow, and Keras-vis, a high-level toolkit for visualizing and debugging trained keras neural networks models.
+
+These visualizations are proposed in the form of a web application developed with Flask.
+
+## Preview
+
+![models management page](https://github.com/maphdev/Deep_Visualization_Neural_Networks_Web_app/blob/master/readme/models-management.png)
+
+![models management page](https://github.com/maphdev/Deep_Visualization_Neural_Networks_Web_app/blob/master/readme/select-visualization.png)
+
+![models management page](https://github.com/maphdev/Deep_Visualization_Neural_Networks_Web_app/blob/master/readme/result.png)
 
 ## Installation
 
@@ -50,3 +66,4 @@ Three models are available with this command :
 - "NASNetLarge" : a 1021-layers network trained on ImageNet, with a default input size of 331x331.
 
 Models loaded with this command are generated in the "models" directory.
+
